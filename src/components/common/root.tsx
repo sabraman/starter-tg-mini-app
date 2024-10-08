@@ -1,22 +1,22 @@
 "use client";
 
 import {
-  miniApp,
-  useSignal,
-  init,
   backButton,
-  settingsButton,
+  init,
   mainButton,
-  useLaunchParams,
+  miniApp,
+  settingsButton,
   themeParams,
+  useLaunchParams,
+  useSignal,
   viewport,
 } from "@telegram-apps/sdk-react";
-import { ThemeProvider } from "./theme-provider";
-import { useCallback, useEffect, useMemo } from "react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
-import { AuthProvider, useAuth } from "./auth";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo } from "react";
+import { AuthProvider, useAuth } from "./auth";
+import { ThemeProvider } from "./theme-provider";
 
 export default function Root({
   children,
@@ -83,7 +83,12 @@ export default function Root({
   }, [debug]);
 
   return (
-    <ThemeProvider enableSystem defaultTheme={isDark ? "dark" : "light"}>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme={isDark ? "dark" : "light"}
+      enableSystem
+      disableTransitionOnChange
+    >
       <TonConnectUIProvider manifestUrl={manifestUrl}>
         <AuthProvider>
           <App>{children}</App>
