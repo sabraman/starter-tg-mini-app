@@ -2,6 +2,10 @@
 
 This project is a starter for building Telegram Mini Apps using Next.js.
 
+## Demo
+
+[https://t.me/mini_app_starter_bot/app](https://t.me/mini_app_starter_bot/app)
+
 ## Stack
 
 - [Next.js](https://nextjs.org)
