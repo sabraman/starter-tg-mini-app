@@ -85,8 +85,8 @@ export default function Root({
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme={isDark ? "dark" : "light"}
-      enableSystem
+      forcedTheme={isDark ? "dark" : "light"}
+      enableSystem={false}
       disableTransitionOnChange
     >
       <TonConnectUIProvider manifestUrl={manifestUrl}>
