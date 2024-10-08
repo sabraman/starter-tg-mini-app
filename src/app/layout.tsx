@@ -4,8 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 import { env } from "~/env";
-import { Loader2 } from "lucide-react";
-
+import Loader from "~/components/common/loader";
 export const metadata: Metadata = {
   title: "TG Mini App",
   description: "",
@@ -14,11 +13,7 @@ export const metadata: Metadata = {
 
 const Root = dynamic(() => import("~/components/common/root"), {
   ssr: false,
-  loading: () => (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      <Loader2 className="text-muted-foreground size-8 animate-spin" />
-    </div>
-  ),
+  loading: () => <Loader />,
 });
 
 export default function RootLayout({

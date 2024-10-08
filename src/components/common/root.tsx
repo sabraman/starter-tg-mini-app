@@ -3,6 +3,7 @@
 import {
   backButton,
   init,
+  isTMA,
   mainButton,
   miniApp,
   settingsButton,
@@ -12,13 +13,41 @@ import {
   viewport,
 } from "@telegram-apps/sdk-react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
-import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AuthProvider, useAuth } from "./auth";
 import { ThemeProvider } from "./theme-provider";
+import Loader from "./loader";
 
 export default function Root({
+  children,
+  debug,
+}: {
+  children: React.ReactNode;
+  debug: boolean;
+}) {
+  const [tma, setTMA] = useState<"loading" | "tma" | "web">("loading");
+  useEffect(() => {
+    void isTMA().then((isTMA) => {
+      setTMA(isTMA ? "tma" : "web");
+    });
+  });
+
+  switch (tma) {
+    case "loading":
+      return <Loader />;
+    case "tma":
+      return <MiniApp debug={debug}>{children}</MiniApp>;
+    case "web":
+      return (
+        <div className="flex min-h-screen flex-col items-center justify-center">
+          Please open the app in Telegram
+        </div>
+      );
+  }
+}
+
+export function MiniApp({
   children,
   debug,
 }: {
@@ -91,7 +120,7 @@ export default function Root({
     >
       <TonConnectUIProvider manifestUrl={manifestUrl}>
         <AuthProvider>
-          <App>{children}</App>
+          <AppContent>{children}</AppContent>
           {debug && <DebugInfo />}
         </AuthProvider>
       </TonConnectUIProvider>
@@ -99,15 +128,11 @@ export default function Root({
   );
 }
 
-function App({ children }: { children: React.ReactNode }) {
+function AppContent({ children }: { children: React.ReactNode }) {
   const { isSignedIn } = useAuth();
 
   if (!isSignedIn) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        <Loader2 className="text-primary size-8 animate-spin" />
-      </div>
-    );
+    return <Loader className="text-primary" />;
   }
 
   return <>{children}</>;
