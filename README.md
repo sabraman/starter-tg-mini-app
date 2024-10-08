@@ -25,12 +25,12 @@ This project is a starter for building Telegram Mini Apps using Next.js.
 
 5. Configure the bot using **@BotFather** and the command `/newapp`. Use the public URL you configured in the previous step as the "App link". This step will let you choose an App name, it can be used with the bot url to directly open the app. e.g. `https://t.me/{bot_name}/{app_name}`.
 
-6. Configure the bot's menu button to point to the mini app's url.
+6. Configure the bot's menu button to point to the mini app's URL.
 
 7. Run the development server:
 
-```bash
-pnpm dev
-```
+   ```bash
+   pnpm dev
+   ```
 
-7. Open the mini app via either the Mini App's URL or the clicking on the menu button in the bot.
+8. Open the mini app via either the Mini App's URL or the clicking on the menu button in the bot.
