@@ -1,23 +1,25 @@
 import { backButton } from "@telegram-apps/sdk-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
-export function useBackButton(onClick?: () => void | undefined) {
+export function useBackButton(url?: string) {
   const router = useRouter();
 
-  useEffect(() => {
-    const _onClick =
-      onClick ??
-      (() => {
-        router.back();
-      });
+  const handleClick = useCallback(() => {
+    if (url) {
+      router.push(url);
+    } else {
+      router.back();
+    }
+  }, [router, url]);
 
+  useEffect(() => {
     backButton.show();
-    backButton.onClick(_onClick);
+    backButton.onClick(handleClick);
 
     return () => {
       backButton.hide();
-      backButton.offClick(_onClick);
+      backButton.offClick(handleClick);
     };
-  }, [onClick, router]);
+  }, [handleClick, router]);
 }
