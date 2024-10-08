@@ -13,11 +13,15 @@ import {
   viewport,
 } from "@telegram-apps/sdk-react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button } from "~/components/ui/button";
+import { env } from "~/env";
 import { AuthProvider, useAuth } from "./auth";
-import { ThemeProvider } from "./theme-provider";
 import Loader from "./loader";
+import { ThemeProvider } from "./theme-provider";
+import { Rocket, TriangleAlert } from "lucide-react";
 
 export default function Root({
   children,
@@ -39,11 +43,7 @@ export default function Root({
     case "tma":
       return <MiniApp debug={debug}>{children}</MiniApp>;
     case "web":
-      return (
-        <div className="flex min-h-screen flex-col items-center justify-center">
-          Please open the app in Telegram
-        </div>
-      );
+      return <NonTgView />;
   }
 }
 
@@ -158,4 +158,24 @@ function DebugInfo() {
   }, [initData, startParam, themeParams]);
 
   return <></>;
+}
+
+function NonTgView() {
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-12">
+      <div className="space-y-4">
+        <TriangleAlert className="text-primary mx-auto size-16" />
+        <p className="text-muted-foreground">
+          This app is only available in Telegram
+        </p>
+      </div>
+
+      <Link href={env.NEXT_PUBLIC_TG_APP_URL}>
+        <Button className="gap-2" size="lg">
+          <Rocket className="size-5" />
+          Open App in Telegram
+        </Button>
+      </Link>
+    </div>
+  );
 }
