@@ -22,6 +22,7 @@ import { AuthProvider, useAuth } from "./auth";
 import Loader from "./loader";
 import { ThemeProvider } from "./theme-provider";
 import { Rocket, TriangleAlert } from "lucide-react";
+import { Toaster } from "../ui/sonner";
 
 export default function Root({
   children,
@@ -135,7 +136,12 @@ function AppContent({ children }: { children: React.ReactNode }) {
     return <Loader className="text-primary" />;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <Toaster position="top-center" />
+    </>
+  );
 }
 
 function DebugInfo() {
