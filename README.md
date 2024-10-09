@@ -25,7 +25,7 @@ This project is a starter for building Telegram Mini Apps using Next.js.
 
 3. Set the `TG_API_TOKEN` in `.env` to the API token of your bot.
 
-4. Configure a publicly accessible URL to your local machine using *ngrok* or *cloudflare tunnel*.
+4. Configure a publicly accessible URL to your local machine using *ngrok* or *cloudflare tunnel*. If your public URL is http instead of https, refer to the [docs](https://core.telegram.org/bots/webapps#using-bots-in-the-test-environment) to turn on test environment.
 
 5. Configure the bot using **@BotFather** and the command `/newapp`. Use the public URL you configured in the previous step as the "App link". This step will let you choose an App name, it can be used with the bot url to directly open the app. e.g. `https://t.me/{bot_name}/{app_name}`.
 
