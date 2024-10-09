@@ -119,7 +119,26 @@ export function MiniApp({
       enableSystem={false}
       disableTransitionOnChange
     >
-      <TonConnectUIProvider manifestUrl={manifestUrl}>
+      <TonConnectUIProvider
+        manifestUrl={manifestUrl}
+        walletsListConfiguration={{
+          includeWallets: [
+            {
+              name: "UXUY Wallet",
+              appName: "uxuyTonWallet",
+              universalLink: "https://t.me/UXUYbot/app",
+              bridgeUrl: "https://bridge.tonapi.io/bridge",
+              imageUrl:
+                "https://raw.githubusercontent.com/uxuycom/uxuy-docsite/main/static/assets/UXUYWallet-logo/UXUYWallet_logo_circle.svg",
+              platforms: ["android", "ios", "linux", "windows", "macos"],
+              aboutUrl: "https://uxuy.com",
+              // jsBridgeKey: "uxuyTonWallet",
+              // injected: true,
+              // @see https://docs.uxuy.com/uxuy-connect/tonconnect/
+            },
+          ],
+        }}
+      >
         <AuthProvider>
           <AppContent>{children}</AppContent>
           {debug && <DebugInfo />}
