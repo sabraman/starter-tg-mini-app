@@ -8,7 +8,6 @@ function authenticate(initDataRaw: string) {
   const apiToken = env.TG_API_TOKEN;
 
   try {
-    console.log("checking initDataRaw", initDataRaw);
     validate(initDataRaw, apiToken);
 
     const initData = parse(initDataRaw);
