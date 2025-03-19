@@ -39,14 +39,14 @@ export async function signIn(initDataRaw: string) {
   const result = authenticate(initDataRaw);
 
   if (result.isAuthorized) {
-    cookies().set(COOKIE_NAME, initDataRaw);
+    (await cookies()).set(COOKIE_NAME, initDataRaw);
   }
 
   return result;
 }
 
 export async function getAuth() {
-  const initDataRaw = cookies().get(COOKIE_NAME)?.value;
+  const initDataRaw = (await cookies()).get(COOKIE_NAME)?.value;
   if (!initDataRaw) {
     return {
       isAuthorized: false,

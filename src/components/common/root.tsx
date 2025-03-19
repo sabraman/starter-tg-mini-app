@@ -12,10 +12,9 @@ import {
   useSignal,
   viewport,
 } from "@telegram-apps/sdk-react";
-import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { env } from "~/env";
 import { AuthProvider, useAuth } from "./auth";
@@ -56,12 +55,6 @@ export function MiniApp({
   debug: boolean;
 }) {
   const isDark = useSignal(miniApp.isDark);
-
-  const manifestUrl = useMemo(() => {
-    return typeof window !== "undefined"
-      ? new URL("tonconnect-manifest.json", window.location.href).toString()
-      : "";
-  }, []);
 
   const router = useRouter();
 
@@ -119,31 +112,10 @@ export function MiniApp({
       enableSystem={false}
       disableTransitionOnChange
     >
-      <TonConnectUIProvider
-        manifestUrl={manifestUrl}
-        walletsListConfiguration={{
-          includeWallets: [
-            {
-              name: "UXUY Wallet",
-              appName: "uxuyTonWallet",
-              universalLink: "https://t.me/UXUYbot/app",
-              bridgeUrl: "https://bridge.tonapi.io/bridge",
-              imageUrl:
-                "https://raw.githubusercontent.com/uxuycom/uxuy-docsite/main/static/assets/UXUYWallet-logo/UXUYWallet_logo_circle.svg",
-              platforms: ["android", "ios", "linux", "windows", "macos"],
-              aboutUrl: "https://uxuy.com",
-              // jsBridgeKey: "uxuyTonWallet",
-              // injected: true,
-              // @see https://docs.uxuy.com/uxuy-connect/tonconnect/
-            },
-          ],
-        }}
-      >
         <AuthProvider>
           <AppContent>{children}</AppContent>
           {debug && <DebugInfo />}
         </AuthProvider>
-      </TonConnectUIProvider>
     </ThemeProvider>
   );
 }

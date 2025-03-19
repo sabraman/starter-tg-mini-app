@@ -1,4 +1,4 @@
-import { Cherry, Wallet2 } from "lucide-react";
+import { Cherry } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import { getAuth } from "~/lib/security";
@@ -20,12 +20,6 @@ export default async function HomePage() {
         <Link href="/demo">
           <Button className="gap-2">
             <Cherry className="size-4" /> Demo
-          </Button>
-        </Link>
-
-        <Link href="/payment">
-          <Button className="gap-2">
-            <Wallet2 className="size-4" /> Wallet
           </Button>
         </Link>
       </div>
