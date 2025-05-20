@@ -13,20 +13,31 @@ import { useEffect } from "react";
  */
 export function useMainButton(onClick: () => void) {
   useEffect(() => {
-    mainButton.setParams({
-      isEnabled: true,
-      isVisible: true,
-      text: "Demo",
-      hasShineEffect: false,
-    });
-    mainButton.onClick(onClick);
+    // Check if methods are available before using them
+    if (mainButton.setParams.isAvailable()) {
+      mainButton.setParams({
+        isEnabled: true,
+        isVisible: true,
+        text: "Demo",
+        hasShineEffect: false,
+      });
+    }
+    
+    if (mainButton.onClick.isAvailable()) {
+      mainButton.onClick(onClick);
+    }
 
     return () => {
-      mainButton.offClick(onClick);
-      mainButton.setParams({
-        isEnabled: false,
-        isVisible: false,
-      });
+      if (mainButton.offClick.isAvailable()) {
+        mainButton.offClick(onClick);
+      }
+      
+      if (mainButton.setParams.isAvailable()) {
+        mainButton.setParams({
+          isEnabled: false,
+          isVisible: false,
+        });
+      }
     };
   }, [onClick]);
 }

@@ -1,4 +1,12 @@
-import { isErrorOfType, parse, validate } from "@telegram-apps/init-data-node";
+import { 
+  parse, 
+  validate,
+  isValid,
+  isSignatureInvalidError,
+  isAuthDateInvalidError,
+  isExpiredError,
+  isSignatureMissingError
+} from "@telegram-apps/init-data-node";
 import { cookies } from "next/headers";
 import { env } from "~/env";
 
@@ -7,23 +15,49 @@ export const COOKIE_NAME = "tg-init-data";
 function authenticate(initDataRaw: string) {
   const apiToken = env.TG_API_TOKEN;
 
-  try {
-    validate(initDataRaw, apiToken);
-
-    const initData = parse(initDataRaw);
-
+  // For web environment or when init data is empty, handle gracefully
+  if (!initDataRaw || initDataRaw === "") {
+    console.log("Init data is empty");
     return {
-      isAuthorized: true,
-      initData,
+      isAuthorized: false,
+      initData: null,
     } as const;
+  }
+
+  // Check if it has the hash parameter
+  if (!initDataRaw.includes("hash=")) {
+    console.log("Hash parameter is missing");
+    return {
+      isAuthorized: false,
+      initData: null,
+    } as const;
+  }
+
+  try {
+    // Use isValid for cleaner code
+    const isValidInitData = isValid(initDataRaw, apiToken);
+    
+    if (isValidInitData) {
+      const initData = parse(initDataRaw);
+      return {
+        isAuthorized: true,
+        initData,
+      } as const;
+    } else {
+      console.log("Init data is invalid");
+      return {
+        isAuthorized: false,
+        initData: null,
+      } as const;
+    }
   } catch (e) {
-    if (isErrorOfType(e, "ERR_SIGN_INVALID")) {
-      console.log("Sign is invalid");
-    } else if (isErrorOfType(e, "ERR_AUTH_DATE_INVALID")) {
+    if (isSignatureInvalidError(e)) {
+      console.log("Signature or hash is invalid");
+    } else if (isSignatureMissingError(e)) {
+      console.log("Hash parameter is missing");
+    } else if (isAuthDateInvalidError(e)) {
       console.log("Auth date is invalid");
-    } else if (isErrorOfType(e, "ERR_HASH_INVALID")) {
-      console.log("Hash is invalid");
-    } else if (isErrorOfType(e, "ERR_EXPIRED")) {
+    } else if (isExpiredError(e)) {
       console.log("Init data is expired");
     } else {
       console.log("Unknown error", e);

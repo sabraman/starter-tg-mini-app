@@ -23,12 +23,23 @@ export function useBackButton(url?: string) {
   }, [router, url]);
 
   useEffect(() => {
-    backButton.show();
-    backButton.onClick(handleClick);
+    // Check availability before using methods
+    if (backButton.show.isAvailable()) {
+      backButton.show();
+    }
+    
+    if (backButton.onClick.isAvailable()) {
+      backButton.onClick(handleClick);
+    }
 
     return () => {
-      backButton.hide();
-      backButton.offClick(handleClick);
+      if (backButton.hide.isAvailable()) {
+        backButton.hide();
+      }
+      
+      if (backButton.offClick.isAvailable()) {
+        backButton.offClick(handleClick);
+      }
     };
   }, [handleClick, router]);
 }

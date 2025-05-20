@@ -1,6 +1,6 @@
 "use client";
 
-import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
+import { useRawInitData, retrieveRawInitData } from "@telegram-apps/sdk-react";
 import {
   createContext,
   useContext,
@@ -23,7 +23,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     startSignIn(async () => {
-      const { initDataRaw } = retrieveLaunchParams();
+      const initDataRaw = retrieveRawInitData();
       await signInAction(initDataRaw ?? "").then((result) => {
         setInSignedIn(result.isAuthorized);
       });
