@@ -1,6 +1,6 @@
 # Telegram Mini App Starter
 
-This project is a starter for building Telegram Mini Apps using Next.js.
+This project is a starter for building Telegram Mini Apps using Next.js with integration Telegram bot using GrammyJS.
 
 ## Demo
 
@@ -13,6 +13,14 @@ This project is a starter for building Telegram Mini Apps using Next.js.
 - [Tailwind CSS](https://tailwindcss.com)
 - [Telegram Mini App SDK](https://docs.telegram-mini-apps.com/)
 - [Shadcn UI](https://ui.shadcn.com/)
+- [GrammyJS](https://grammy.dev/) - Modern Telegram bot framework for Node.js
+- [Zod](https://zod.dev/) - TypeScript-first schema validation
+
+## Features
+
+- 🤖 Telegram Bot integration using GrammyJS
+- 📱 Mobile-first UI with Shadcn components
+- 🚀 Latest Next.js features (App Router, Server Components)
 
 ## Local Development
 
@@ -38,3 +46,23 @@ This project is a starter for building Telegram Mini Apps using Next.js.
    ```
 
 8. Open the mini app via either the Mini App's URL or the clicking on the menu button in the bot.
+
+## Telegram Bot Development
+
+This starter uses [GrammyJS](https://grammy.dev/) for Telegram bot integration. The bot code is located in the `/bot` directory.
+
+### Key Bot Features
+
+- Webhook and long polling support
+- Commands handling and menu button configuration
+- Mini App data validation and secure authentication
+- Integration with the Next.js backend via API routes
+
+### Bot Configuration
+
+1. Update your bot commands and settings using the BotFather
+2. Set up webhooks or use long polling (configurable in the bot code)
+3. Configure allowed updates and command handling
+4. Implement custom middleware for your bot's specific needs
+
+See the GrammyJS [documentation](https://grammy.dev/guide/) for more detailed information about bot development.
